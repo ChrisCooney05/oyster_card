@@ -26,7 +26,7 @@ describe Oystercard do
   describe '#deduct' do
     it 'Should deduct from balance with value passed' do
       oystercard.top_up(30)
-      expect(oystercard.deduct(20)).to eq(10)
+      expect {oystercard.touch_out}.to change{oystercard.balance}.from(30).to(28)
     end
   end
 

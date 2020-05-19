@@ -4,6 +4,7 @@ class Oystercard
 
   LIMIT = 90
   LOW = 1
+  MIN_FAIR = 2
 
   def initialize
     @balance = 0
@@ -14,10 +15,6 @@ class Oystercard
     raise "Maximum balance is £#{LIMIT}, current balance is £#{@balance}" if balance_check_over?(value)
 
     @balance += value
-  end
-
-  def deduct(value)
-    @balance -= value
   end
 
   def in_journey?
@@ -31,10 +28,15 @@ class Oystercard
   end
 
   def touch_out
+    deduct
     @in_use = false
   end
 
   private
+
+  def deduct(value = MIN_FAIR)
+    @balance -= value
+  end
 
   def balance_check_over?(value)
     @balance + value > LIMIT
