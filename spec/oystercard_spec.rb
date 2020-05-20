@@ -2,6 +2,8 @@ require 'oystercard'
 
 describe Oystercard do
   let(:oystercard) {Oystercard.new}
+  let(:station) {double :station}
+
   it 'Should have an Oystercard class' do
     expect(Oystercard).to respond_to(:new)
   end
@@ -38,22 +40,23 @@ describe Oystercard do
 
   describe '#touch_in' do
     it 'Should raise an error if balance is below £1 when touching in' do
-      expect { oystercard.touch_in }.to raise_error("Insufficient funds, current balance £#{@balance.to_i}. Minimum balance to travel £#{Oystercard::LOW}")
+      expect { oystercard.touch_in(station) }.to raise_error("Insufficient funds, current balance £#{@balance.to_i}. Minimum balance to travel £#{Oystercard::LOW}")
     end
 
-    it 'Should change value of @in_use to true' do
-      oystercard.top_up(10)
-      oystercard.touch_in
-      expect(oystercard.in_use).to eq true
+    it 'Should remember the station that was touched into' do
+      oystercard.top_up(30)
+      oystercard.touch_in(station)
+      expect(oystercard.entry_station).to eq(station)
     end
   end
 
   describe '#touch_out' do
-    it 'Should change value of @in_use to false' do
+
+    it 'Should reset entry station on touch out' do
       oystercard.top_up(10)
-      oystercard.touch_in
+      oystercard.touch_in(station)
       oystercard.touch_out
-      expect(oystercard.in_use).to eq false
+      expect(oystercard.entry_station).to eq(nil)
     end
   end
 end
