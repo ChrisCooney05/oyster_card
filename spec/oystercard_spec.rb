@@ -8,6 +8,10 @@ describe Oystercard do
     expect(Oystercard).to respond_to(:new)
   end
 
+  it 'Should have an empty list of journeys by default' do
+    expect(oystercard.journeys).to eq([])
+  end
+
   describe '#balance' do
     it 'Should initialize a new a balance of 0' do
       expect(oystercard.balance).to eq(0)
