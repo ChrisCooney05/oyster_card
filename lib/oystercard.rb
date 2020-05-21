@@ -28,12 +28,17 @@ class Oystercard
     @entry_station = station
   end
 
-  def touch_out
+  def touch_out(station)
     deduct
+    add_trip(station)
     @entry_station = nil
   end
 
   private
+
+  def add_trip(station)
+    @journeys << {entry: @entry_station, exit: station}
+  end
 
   def deduct(value = MIN_FAIR)
     @balance -= value
