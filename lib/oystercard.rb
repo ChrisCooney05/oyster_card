@@ -7,7 +7,6 @@ class Oystercard
 
   LIMIT = 90
   LOW = 1
-  MIN_FAIR = 2
 
   def initialize
     @balance = 0
@@ -35,9 +34,13 @@ class Oystercard
     @journeys.touch_out(station)
   end
 
+  def trip_history
+    @journeys.trip_history
+  end
+
   private
 
-  def deduct(value = MIN_FAIR)
+  def deduct(value = Journey::MIN_FARE)
     @balance -= value
   end
 

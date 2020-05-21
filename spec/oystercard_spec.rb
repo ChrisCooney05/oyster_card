@@ -42,12 +42,6 @@ describe Oystercard do
     it 'Should raise an error if balance is below £1 when touching in' do
       expect { subject.touch_in(waterloo) }.to raise_error("Insufficient funds, current balance £#{@balance.to_i}. Minimum balance to travel £#{Oystercard::LOW}")
     end
-
-    xit 'Should remember the station that was touched into' do
-      subject.top_up(30)
-      subject.touch_in(waterloo)
-      expect(subject.entry_station).to eq(waterloo)
-    end
   end
 
   describe '#touch_out' do
@@ -60,11 +54,11 @@ describe Oystercard do
   end
 
   describe '#journeys' do
-    xit 'Should store a list of journeys on #touch_out' do
+    it 'Should store a list of journeys on #touch_out' do
       subject.top_up(10)
       subject.touch_in(waterloo)
       subject.touch_out(victoria)
-      expect(subject.touch_out(victoria)).to include({entry: waterloo, exit: victoria})
+      expect(subject.trip_history).to include({entry: waterloo, exit: victoria})
     end
   end
 end

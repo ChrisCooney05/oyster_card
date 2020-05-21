@@ -2,6 +2,9 @@ class Journey
 
   attr_reader :journeys
 
+  MIN_FARE = 2
+  PENALTY_FARE = 6
+
   def initialize
     @journeys = []
     @entry_station = nil
@@ -20,11 +23,16 @@ class Journey
     @entry_station = nil
   end
 
-  private
+  def fare
+    PENALTY_FARE
+  end
+
+
+  def trip_history
+    @journeys
+  end
 
   def add_trip(station)
     @journeys << {entry: @entry_station, exit: station}
   end
-
-
 end
