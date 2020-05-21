@@ -8,10 +8,6 @@ describe Oystercard do
     expect(Oystercard).to respond_to(:new)
   end
 
-  it 'Should have an empty list of journeys by default' do
-    expect(subject.journeys).to eq([])
-  end
-
   describe '#balance' do
     it 'Should initialize a new a balance of 0' do
       expect(subject.balance).to eq(0)
@@ -47,7 +43,7 @@ describe Oystercard do
       expect { subject.touch_in(waterloo) }.to raise_error("Insufficient funds, current balance £#{@balance.to_i}. Minimum balance to travel £#{Oystercard::LOW}")
     end
 
-    it 'Should remember the station that was touched into' do
+    xit 'Should remember the station that was touched into' do
       subject.top_up(30)
       subject.touch_in(waterloo)
       expect(subject.entry_station).to eq(waterloo)
@@ -64,11 +60,11 @@ describe Oystercard do
   end
 
   describe '#journeys' do
-    it 'Should store a list of journeys on #touch_out' do
+    xit 'Should store a list of journeys on #touch_out' do
       subject.top_up(10)
       subject.touch_in(waterloo)
       subject.touch_out(victoria)
-      expect(subject.journeys).to include({entry: waterloo, exit: victoria})
+      expect(subject.touch_out(victoria)).to include({entry: waterloo, exit: victoria})
     end
   end
 end
